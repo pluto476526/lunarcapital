@@ -1,0 +1,165 @@
+{% extends 'dash/main.html' %}
+{% load static %}
+{% load humanize %}
+{% load time_filters %}
+{% block main %}
+
+
+<!-- Forex Dashboard Summary -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-globe fa-3x text-info"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Currency Pairs</p>
+                    <h6 class="mb-0">80+</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-clock fa-3x text-info"></i>
+                <div class="ms-3">
+                    <p class="mb-2">24/5 Market</p>
+                    <h6 class="mb-0">Live Rates</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-signal fa-3x text-info"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Historical Coverage</p>
+                    <h6 class="mb-0">2001 – Present</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-database fa-3x text-info"></i>
+                <div class="ms-3">
+                    <p class="mb-2">Sources</p>
+                    <h6 class="mb-0">Yahoo / AV</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Instructions -->
+<div class="container-fluid mt-4 px-4">
+    <div class="bg-secondary p-4 rounded shadow-sm">
+        <h4 class="mb-3">📘 How to Analyze Forex Data</h4>
+        <p>Use the form below to analyze forex pairs like <code>EUR/USD</code>, <code>GBP/JPY</code>, or <code>AUD/NZD</code>. You can backtest against historical exchange rates and inspect volatility, drawdowns, and long-term trends.</p>
+        <ul>
+            <li>💱 <strong>Pairs:</strong> Enter forex pair symbols (e.g., <code>USD/JPY</code>)</li>
+            <li>📅 <strong>Date Range:</strong> Choose the historical period you want to analyze</li>
+            <li>🔍 <strong>Granularity:</strong> Daily, weekly, or monthly</li>
+        </ul>
+        <p class="text-muted">Data is normalized for spread, adjusted for UTC, and cleaned for analysis. Visualize trends and apply quantitative metrics using your selected time frame.</p>
+        <button class="btn btn-info mt-2" data-toggle="modal" data-target="#forexModal">📤 Submit Forex Analysis</button>
+    </div>
+</div>
+
+<!-- Feature Overview -->
+<div class="container-fluid mt-4 px-4">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="bg-secondary p-3 rounded shadow-sm h-100">
+                <h6>📈 Key Metrics</h6>
+                <ul class="small">
+                    <li>Daily Volatility (pips)</li>
+                    <li>Average True Range</li>
+                    <li>Max Drawdown</li>
+                    <li>Sharpe Ratio</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-secondary p-3 rounded shadow-sm h-100">
+                <h6>📊 Visualization</h6>
+                <ul class="small">
+                    <li>Price Movement Chart</li>
+                    <li>Heatmap of Returns</li>
+                    <li>Volatility Timeline</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bg-secondary p-3 rounded shadow-sm h-100">
+                <h6>🌐 API Feeds</h6>
+                <ul class="small">
+                    <li><strong>Yahoo Finance:</strong> Spot FX & historical</li>
+                    <li><strong>Alpha Vantage:</strong> Technical FX indicators</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="forexModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content bg-secondary">
+      <div class="modal-header">
+        <h5 class="modal-title">Data Request Form</h5>
+        <button type="button" class="close btn btn-primary" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+        {% csrf_token %}
+        <div class="bg-secondary rounded h-100 p-4">
+            <h6 class="mb-4">💱 Analyze Forex Market Performance</h6>
+
+            <div class="mb-3">
+                <label for="{{ f_form.tickers.id_for_label }}" class="form-label">
+                    {{ f_form.tickers.label }}
+                    <i class="fa fa-info-circle text-muted"
+                       data-toggle="tooltip"
+                       title="Enter currency pairs like EURUSD=X, GBPUSD=X. Separate multiple pairs with commas."></i>
+                </label>
+                {{ f_form.tickers }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ f_form.start_date.id_for_label }}" class="form-label">Start Date</label>
+                {{ f_form.start_date }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ f_form.end_date.id_for_label }}" class="form-label">End Date</label>
+                {{ f_form.end_date }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ f_form.metrics.id_for_label }}" class="form-label">
+                    {{ f_form.metrics.label }}
+                    <i class="fa fa-info-circle text-muted"
+                       data-toggle="tooltip"
+                       title="Select key performance metrics such as volatility, max drawdown, or moving average deviation. Use Ctrl/Cmd for multi-selection."></i>
+                </label>
+                {{ f_form.metrics }}
+                <small class="text-muted d-block mt-1">Hold Ctrl/Cmd to select multiple metrics.</small>
+            </div>
+
+            <input type="hidden" name="action" value="analyze_forex">
+
+            <div class="text-end">
+                <button class="btn btn-success" type="submit">
+                    <i class="fa fa-sync me-1"></i>Analyze
+                </button>
+            </div>
+        </div>
+    </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

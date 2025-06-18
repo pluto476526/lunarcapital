@@ -1,0 +1,305 @@
+{% extends 'home/main.html' %}
+{% load static %}
+{% block main %}
+  <main>
+    <div class="w-100 overflow-hidden position-relative bg-black text-white" data-aos="fade">
+      <div class="position-absolute w-100 h-100 bg-black opacity-75 top-0 start-0"></div>
+      <div class="container py-vh-4 position-relative mt-5 px-vw-5 text-center">
+        <div class="row d-flex align-items-center justify-content-center py-vh-5">
+          <div class="col-12 col-xl-10">
+            <span class="h5 text-secondary fw-lighter">Professional Trading Analytics</span>
+            <h1 class="display-huge mt-3 mb-3 lh-1">Quantitative Analysis Tools for Serious Traders</h1>
+          </div>
+          <div class="col-12 col-xl-8">
+            <p class="lead text-secondary">Professional-grade backtesting, historical analysis, and trading metrics for stocks, forex, and cryptocurrencies. Make data-driven decisions with institutional-quality tools.</p>
+          </div>
+          <div class="col-12 text-center">
+            <a href="#" class="btn btn-xl btn-light">Start Free Trial
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-100 position-relative bg-black text-white bg-cover d-flex align-items-center">
+      <div class="container-fluid px-vw-5">
+        <div class="position-absolute w-100 h-50 bg-dark bottom-0 start-0"></div>
+        <div class="row d-flex align-items-center position-relative justify-content-center px-0 g-5">
+          <div class="col-12 col-lg-6">
+            <img src="{% static 'web/img/hero4.jpg' %}" width="2280" height="1732" alt="Stock market data visualization"
+              class="img-fluid position-relative rounded-5 shadow" data-aos="fade-up">
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <img src="{% static 'web/img/hero2.jpg' %}" width="1116" height="1578" alt="Forex trading metrics"
+              class="img-fluid position-relative rounded-5 shadow" data-aos="fade-up" data-aos-duration="2000">
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <img src="{% static 'web/img/hero5.jpg' %}" width="1116" height="848" alt="Cryptocurrency analysis"
+              class="img-fluid position-relative rounded-5 shadow" data-aos="fade-up" data-aos-duration="3000">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-dark">
+      <div class="container px-vw-5 py-vh-5">
+        <div class="row d-flex align-items-center">
+          <div class="col-12 col-lg-7 text-lg-end" data-aos="fade-right">
+            <span class="h5 text-secondary fw-lighter">Advanced Analytics</span>
+            <h2 class="display-4">Comprehensive trading metrics across all asset classes with institutional-grade backtesting capabilities and actionable insights.</h2>
+          </div>
+          <div class="col-12 col-lg-5" data-aos="fade-left">
+            <h3 class="pt-5">Stocks Analysis Suite</h3>
+            <p class="text-secondary">
+              <strong>Sharpe Ratio</strong><br>
+              <strong>Max Drawdown</strong><br>
+              <strong>CAGR</strong><br>
+              <strong>Alpha</strong><br>
+              <strong>Beta</strong><br>
+              <a href="#" class="link-fancy link-fancy-light me-2">Explore Stock Tools</a>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+              </svg>
+            </p>
+            <h3 class="border-top border-secondary pt-5 mt-5">Forex & Crypto Metrics</h3>
+            <p class="text-secondary">
+              <strong>ATR (Average True Range):</strong><br>
+              <strong>Pip Volatility:</strong><br>
+              <strong>Currency Correlation:</strong><br>
+              <strong>Crypto Volatility Index:</strong><br>
+              <strong>Log Returns:</strong><br>
+              <a href="#" class="link-fancy link-fancy-light me-2">See Forex/Crypto Tools</a>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+              </svg>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="bg-black py-vh-3">
+      <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
+        <div class="row gx-5">
+          <div class="col-12 col-md-6">
+            <div class="card bg-transparent mb-5" data-aos="zoom-in-up">
+              <div class="bg-dark shadow rounded-5 p-0">
+                <img src="{% static 'web/img/img4.jpg' %}" alt="Backtesting interface"
+                  class="img-fluid rounded-5 no-bottom-radius" loading="lazy">
+                <div class="p-5">
+                  <h2 class="fw-lighter">Multi-Asset Backtesting</h2>
+                  <p class="pb-4 text-secondary">Test strategies across stocks, forex and crypto with realistic slippage and commission modeling. Walk-forward optimization and Monte Carlo simulations included.</p>
+                  <a href="#" class="link-fancy link-fancy-light">See Backtesting Features</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="card bg-transparent" data-aos="zoom-in-up">
+              <div class="bg-dark shadow rounded-5 p-0">
+                <img src="{% static 'web/img/hero.jpg' %}" alt="Portfolio analytics dashboard"
+                  class="img-fluid rounded-5 no-bottom-radius" loading="lazy">
+                <div class="p-5">
+                  <h2 class="fw-lighter">Portfolio Analytics</h2>
+                  <p class="pb-4 text-secondary">Advanced correlation matrices, efficient frontier visualization, and risk contribution analysis across all your holdings.</p>
+                  <a href="#" class="link-fancy link-fancy-light">Explore Portfolio Tools</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="p-5 pt-0 mt-5" data-aos="fade">
+              <span class="h5 text-secondary fw-lighter">Coming Soon</span>
+              <h2 class="display-4">Binance Trading Bot Integration (Q4 2023)</h2>
+            </div>
+            <div class="card bg-transparent mb-5 mt-5" data-aos="zoom-in-up">
+              <div class="bg-dark shadow rounded-5 p-0">
+                <img src="{% static 'web/img/img3.jpg' %}" alt="Algorithmic trading visualization"
+                  class="img-fluid rounded-5 no-bottom-radius" loading="lazy">
+                <div class="p-5">
+                  <h2 class="fw-lighter">Strategy Builder</h2>
+                  <p class="pb-4 text-secondary">Drag-and-drop interface for creating custom trading algorithms without coding. Over 100 technical indicators and pattern recognition tools.</p>
+                  <a href="#" class="link-fancy link-fancy-light">Learn About Strategy Builder</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="card bg-transparent" data-aos="zoom-in-up">
+              <div class="bg-dark shadow rounded-5 p-0">
+                <img src="{% static 'web/img/img1.jpg' %}" alt="Market scanner interface"
+                  class="img-fluid rounded-5 no-bottom-radius" loading="lazy">
+                <div class="p-5">
+                  <h2 class="fw-lighter">Comprehensive Historical Data</h2>
+                  <p class="pb-4 text-secondary">Extensive data spanning decades and detailed to the minute or tick. All data is formatted into easy-to-understand graphs for clear analysis.</p>
+                  <a href="#" class="link-fancy link-fancy-light">Start Analysis</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-dark position-relative">
+      <div class="container px-vw-5 py-vh-5">
+        <div class="row d-flex align-items-center">
+          <div class="col-12 col-lg-7">
+            <img class="img-fluid rounded-5 mb-n5 shadow" src="{% static 'web/img/img6.jpg' %}"
+              alt="Trader analyzing charts" loading="lazy" data-aos="zoom-in-right">
+          </div>
+          <div class="col-12 col-lg-5 bg-dark rounded-5 py-5" data-aos="fade">
+            <span class="h5 text-secondary fw-lighter">Who Uses Our Tools</span>
+            <h2 class="display-4">Milky-Way is designed for everyday users, hobbyist investors, and anyone curious about financial markets. Our clean visuals and easy interface make financial data accessible for all levels</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-black">
+      <div class="container px-vw-5 py-vh-5">
+        <div class="row d-flex align-items-center">
+          <div class="col-12 col-lg-5 text-center text-lg-end" data-aos="zoom-in-right">
+            <span class="h5 text-secondary fw-lighter">Simple Pricing</span>
+            <h2 class="display-4">All features included. No hidden fees.</h2>
+          </div>
+          <div class="col-12 col-lg-7 bg-dark rounded-5 py-vh-3 text-center my-5" data-aos="zoom-in-up">
+            <h2 class="display-huge mb-5">
+              <span class="fs-4 me-2 fw-light">$</span><span class="border-bottom border-5">99</span><span
+                class="fs-6 fw-light">/month</span>
+            </h2>
+            <p class="lead text-secondary">Complete access to all analysis tools, historical datasets, and backtesting features. Institutional-quality data at retail trader prices. Cancel anytime. <strong>7-day free trial</strong> included.</p>
+            <a href="#" class="btn btn-xl btn-light">Start Free Trial
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+   
+
+    <div class="container-fluid px-0 px-lg-3 px-xl-5 position-relative" data-aos="fade">
+      <div class="position-absolute w-100 h-50 bg-black top-0 start-0"></div>
+      <div class="position-relative py-3 py-lg-5 bg-cover bg-center rounded-0 rounded-lg-5"
+        style="background-image: url({% static 'web/img/img2.jpg' %})">
+        <div class="container bg-black px-3 px-lg-5 py-3 py-lg-5 rounded-0 rounded-lg-5 shadow">
+          <div class="row">
+            <div class="col-12 col-lg-6">
+
+              <div class="d-flex align-items-center bg-dark shadow rounded-5 p-0 mb-5 mb-lg-0" data-aos="zoom-in-up">
+                <div class="row d-flex justify-content-center">
+                  <div class="col-12">
+                    <img src="{% static 'web/img/img4.jpg' %}" height="400" alt="our CEO with some nice numbers"
+                      class="img-fluid rounded-5" loading="lazy">
+                  </div>
+                  <div class="col-12 col-lg-10 col-xl-8 text-center my-5">
+                    <p class="lead border-bottom pb-4 border-secondary">"We built these tools to give retail traders the same analytical power that institutions have."</p>
+                    <p class="text-secondary text-center">Peter Kibuka, Founder & CEO</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6 ps-lg-5">
+              <div class="ps-0 ps-lg-3">
+                <span class="h5 text-secondary fw-lighter">By The Numbers</span>
+                <h2 class="display-2 display-lg-1 fw-bolder" data-aos="zoom-in-left">+400</h2>
+                <p class="h5 fw-lighter text-secondary">Technical indicators and analytical tools available</p>
+                <h2 class="display-2 display-lg-1 fw-bolder border-top border-secondary pt-3 pt-lg-5 mt-3 mt-lg-5" data-aos="zoom-in-left">78,981</h2>
+                <p class="h5 fw-lighter text-secondary">Assets covered across stocks, forex, and cryptocurrencies</p>
+                <h2 class="display-2 display-lg-1 fw-bolder border-top border-secondary pt-3 pt-lg-5 mt-3 mt-lg-5" data-aos="zoom-in-left">98%</h2>
+                <p class="h5 fw-lighter text-secondary">Customer satisfaction rating from active subscribers</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="bg-dark py-vh-5">
+      <div class="container px-vw-5">
+        <div class="row d-flex gx-5 align-items-center">
+          <div class="col-12 col-lg-6">
+            <div class="rounded-5 bg-black p-5 shadow" data-aos="zoom-in-right">
+              <div class="fs-1">
+                <!-- 5 star rating svgs -->
+              </div>
+              <p class="text-secondary lead">"The correlation matrices saved me from overexposure to similar assets. I reduced my portfolio volatility by 30% while maintaining returns. The backtesting engine is the most accurate I've used outside of Bloomberg Terminal."</p>
+              <div class="d-flex justify-content-start align-items-center border-top border-secondary pt-3">
+                <img src="{% static 'web/img/hero5.jpg' %}" width="96" height="96" class="rounded-circle me-3" alt="Trader profile"
+                  data-aos="fade" loading="lazy">
+                <div>
+                  <span class="h6 fw-5">Michael Chen</span><br>
+                  <small class="text-secondary">Prop Trader, NYC</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-5 bg-black p-5 shadow mt-5" data-aos="zoom-in-right">
+              <div class="fs-1">
+                <!-- 4.5 star rating svgs -->
+              </div>
+              <p class="text-secondary lead">"As a crypto trader, the volatility-adjusted position sizing tools have been game-changing. I can now allocate capital based on statistical edge rather than guesswork. The Binance API integration can't come soon enough!"</p>
+              <div class="d-flex justify-content-start align-items-center border-top border-secondary pt-3">
+                <img src="{% static 'web/img/hero5.jpg' %}" width="96" height="96" class="rounded-circle me-3" alt="Crypto trader"
+                  data-aos="fade" loading="lazy">
+                <div>
+                  <span class="h6 fw-5">Sarah Rodriguez</span><br>
+                  <small class="text-secondary">Crypto Fund Manager</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="p-5 pt-0" data-aos="fade">
+              <span class="h5 text-secondary fw-lighter">User Testimonials</span>
+              <h2 class="display-4">Trusted by professional traders worldwide</h2>
+            </div>
+            <div class="rounded-5 bg-black p-5 shadow mt-5 gradient" data-aos="zoom-in-left">
+              <div class="fs-1">
+                <!-- 5 star rating svgs -->
+              </div>
+              <p class="lead">"Our fund uses this platform for initial strategy screening before committing to full development. The ability to test across multiple asset classes simultaneously has improved our research efficiency by at least 40%."</p>
+              <div class="d-flex justify-content-start align-items-center border-top pt-3">
+                <img src="{% static 'web/img/hero5.jpg' %}" width="96" height="96" class="rounded-circle me-3" alt="Fund manager"
+                  data-aos="fade" loading="lazy">
+                <div>
+                  <span class="h6 fw-5">James Wilson</span><br>
+                  <small>Quant Analyst, Vertex Capital</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- New CTA Section -->
+    <div class="bg-black py-vh-3">
+      <div class="container text-center px-vw-5">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2 class="display-4 mb-5" data-aos="fade">Ready to transform your trading?</h2>
+            <a href="#" class="btn btn-xl btn-light me-3" data-aos="zoom-in">Start Free Trial</a>
+            <a href="#" class="btn btn-xl btn-outline-light" data-aos="zoom-in">Schedule Demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+{% endblock %}

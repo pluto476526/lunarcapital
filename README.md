@@ -1,13 +1,13 @@
 # 🚀 Lunar Capital Backtester
 
 **Domain:** [milky-way.space](https://milky-way.space)  
-An automated investment strategy backtesting platform that empowers users to design, test, and evaluate portfolio strategies using historical financial data.
+An automated investment analytics platform that empowers users to design, test, and evaluate portfolio strategies using historical financial data.
 
 ---
 
 ## 🌌 Overview
 
-Lunar Capital Backtester is a Django-powered tool designed for novice and professional investors. It allows users to simulate portfolio performance using custom or predefined investment strategies. Through robust analytics, users can understand expected returns, risk, drawdowns, and overall strategy viability before deploying real capital.
+Milky-Way Analytics is a platform designed for novice and professional investors. It allows users to analyze historical data through graphs, and simulate portfolio performance using custom or predefined investment strategies. Through robust analytics, users can understand expected returns, risk, drawdowns, and overall strategy viability before deploying real capital.
 
 ---
 
@@ -33,7 +33,8 @@ Lunar Capital Backtester is a Django-powered tool designed for novice and profes
 - Integration-ready (Yahoo Finance, Alpha Vantage, Polygon)
 - Resampling and date range filtering
 
-### 🔁 Backtesting Engine
+### 🔁 Backtesting
+- Uses Backtesting library
 - Event-driven or vectorized simulation core
 - Simulates trades, positions, portfolio evolution
 - Capital allocation, fees, slippage
@@ -74,8 +75,8 @@ Lunar Capital Backtester is a Django-powered tool designed for novice and profes
 ## 🧱 Tech Stack
 
 - **Backend:** Django, DRF, Celery, Redis
-- **Frontend:** Django Templates (no JavaScript required)
-- **Database:** PostgreSQL (JSONField support)
+- **Frontend:** Django Templates
+- **Database:** PostgreSQL
 - **Task Queue:** Celery + Redis (for async backtesting)
 - **Data Sources:** CSV, or plug-in APIs (Yahoo, Alpha Vantage)
 
