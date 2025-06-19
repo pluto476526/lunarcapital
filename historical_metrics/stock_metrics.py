@@ -23,3 +23,26 @@ logger = logging.getLogger(__name__)
 #    You might get incorrect signals when comparing stocks or backtesting strategies.
 
 
+
+def calculate_daily_mean_returns()
+    pass
+
+
+def calculate_annual_mean_returns()
+    pass
+
+
+def calculate_daily_variance()
+    pass
+
+
+def calculate_annual_variance()
+    pass
+
+
+def calculate_standard_deviation()
+    pass
+
+
+def calculate_annual_standard_deviation()
+    pass

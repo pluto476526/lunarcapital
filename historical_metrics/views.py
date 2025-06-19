@@ -42,10 +42,20 @@ def stocks_view(request):
         
         chart_rp = pl.compare_relative_performance(data, tickers_list)
         chart_drc = pl.calculate_daily_returns_change(data, tickers_list)
+        chart_std = pl.compare_mean_and_std(data, tickers_list)
+        chart_cr = pl.compare_correlation(data, tickers_list)
+        
+        # chat_dd = pl.compare_drawdowns(data, tickers_list)
+        chart_rsi = pl.compare_rsi(data, tickers_list, 14)
+        chart_bb = pl.compare_bollinger_bands(data, tickers_list)
 
         # Store in session
         request.session['chart_rp'] = chart_rp
         request.session['chart_drc'] = chart_drc
+        request.session['chart_std'] = chart_std
+        request.session["chart_cr"] = chart_cr
+        request.session["chart_rsi"] = chart_rsi
+        request.session["chart_bb"] = chart_bb
 
         return redirect("stock_results")
     
@@ -56,13 +66,20 @@ def stock_results_view(request):
     # Retrieve from session and remove it
     chart_rp = request.session.pop("chart_rp", None)
     chart_drc = request.session.pop("chart_drc", None)
-    
+    chart_std = request.session.pop("chart_std", None)
+    chart_cr = request.session.pop("chart_cr", None)
+    chart_rsi = request.session.pop("chart_rsi", None)
+    chart_bb = request.session.pop("chart_bb", None)
     # if not chart_data:
     #     return redirect("stocks")
     
     context = {
         "chart_rp": chart_rp,
         "chart_drc": chart_drc,
+        "chart_std": chart_std,
+        "chart_cr": chart_cr,
+        "chart_rsi": chart_rsi,
+        "chart_bb": chart_bb,
     }
     return render(request, "historical_metrics/stock_results.html", context)
 

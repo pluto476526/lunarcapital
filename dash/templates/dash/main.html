@@ -16,7 +16,9 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.6.0/echarts.min.js" charset="utf-8"></script>
     
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -221,6 +223,10 @@
     
     {{ chart_rp|json_script:"chart-rp" }}
     {{ chart_drc|json_script:"chart-drc" }}
+    {{ chart_std|json_script:"chart-std" }}
+    {{ chart_cr|json_script:"chart-cr" }}
+    {{ chart_rsi|json_script:"chart-rsi" }}
+    {{ chart_bb|json_script:"chart-bb" }}
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -229,7 +235,10 @@
 
             window.chart_rp = JSON.parse(document.getElementById('chart-rp').textContent);
             window.chart_drc = JSON.parse(document.getElementById('chart-drc').textContent);
-            console.log("drc: ", window.chart_drc);
+            window.chart_std = JSON.parse(document.getElementById('chart-std').textContent);
+            window.chart_corr = JSON.parse(document.getElementById('chart-cr').textContent);
+            window.chart_rsi = JSON.parse(document.getElementById('chart-rsi').textContent);
+            window.chart_bb = JSON.parse(document.getElementById('chart-bb').textContent);
         });
 
     </script>
@@ -243,6 +252,10 @@
     <script src="{% static 'dash/lib/chart/chart.min.js' %}"></script>
     <script src="{% static 'historical_metrics/relative_performance.js' %}"></script>
     <script src="{% static 'historical_metrics/daily_returns_change.js' %}"></script>
+    <script src="{% static 'historical_metrics/corelations.js' %}"></script>
+    <script src="{% static 'historical_metrics/mean_and_std.js' %}"></script>
+    <script src="{% static 'historical_metrics/rsi.js' %}"></script>
+    <script src="{% static 'historical_metrics/bolinger.js' %}"></script>
     <script src="{% static 'dash/lib/easing/easing.min.js' %}"></script>
     <script src="{% static 'dash/lib/waypoints/waypoints.min.js' %}"></script>
     <script src="{% static 'dash/lib/owlcarousel/owl.carousel.min.js' %}"></script>

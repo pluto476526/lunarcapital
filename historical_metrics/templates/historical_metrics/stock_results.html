@@ -148,7 +148,12 @@
             <strong>Look for:</strong><br>
             ✔ <strong>Highest line</strong> → Best performer<br>
             ✔ <strong>Steepest rising line</strong> → Strongest growth<br>
-            ✔ <strong>Falling lines</strong> → Underperforming stocks
+            ✔ <strong>Falling lines</strong> → Underperforming stocks<br>
+            ✔ <strong>Converging lines</strong> → Sector-wide trend developing<br>
+            ✔ <strong>Diverging lines</strong> → Stock-specific events<br>
+            ✔ <strong>Sudden spikes/drops</strong> → Earnings reports or market shocks<br>
+            ✔ <strong>Consistent outperformance</strong> → Competitive advantage<br>
+            👆 <strong>Interactive:</strong> Hover over points for details
         </div>
     </div>
 </div>
@@ -171,7 +176,7 @@
             <li>📊 <strong>Colored Bars:</strong> Each stock has a different color, making it easy to compare them visually.</li>
             <li>🔼 <strong>Upward Bar:</strong> The stock gained value that day.</li>
             <li>🔽 <strong>Downward Bar:</strong> The stock lost value that day.</li>
-            <li>📌 <strong>Tooltip on Hover:</strong> Move your mouse over any bar to see the exact return.</li>
+            <li>👆 <strong>Interactive:</strong> Hover over points for details</li>
         </ul>
 
         <h5 class="mt-3">📌 Quick Interpretation Guide</h5>
@@ -186,8 +191,210 @@
 </div>
 
 
+<div class="chart-container" style="height:40rem; width:100%">
+  <canvas id="meanAndStd"></canvas>
+</div>
+
+<!-- Risk-Reward Scatter Plot -->
+<div class="container-fluid mt-4 px-4">
+    <div class="bg-secondary p-4 rounded shadow-sm">
+        <h4 class="mb-3">⚖️ Understanding Risk vs. Reward Analysis</h4>
+        <p>This scatter plot helps you evaluate the trade-off between risk and reward for different stocks. Each point represents a stock positioned based on its historical volatility (risk) and average returns (reward).</p>
+        
+        <h5 class="mt-3">📊 Quadrant Analysis</h5>
+        <ul class="mb-3">
+            <li>Top-right: High risk, high reward</li>
+            <li>Top-left: Low risk, high reward (ideal)</li>
+            <li>Bottom-right: High risk, low reward (avoid)</li>
+            <li>Bottom-left: Low risk, low reward</li>
+        </ul>
+
+        <h5 class="mt-3">📌 Quick Interpretation Guide</h5>
+        <div class="alert alert-dark">
+            <strong>How to analyze:</strong><br>
+            ✔ <strong>Top-left quadrant</strong> → Best investments (high return, low risk)<br>
+            ✔ <strong>Diagonal line</strong> → Stocks following risk-reward tradeoff<br>
+            ✔ <strong>Outliers</strong> → Stocks behaving differently from the norm<br>
+            ✔ <strong>Point distance</strong> → Further apart means more performance variation<br>
+            👆 <strong>Interactive:</strong> Hover over points for details
+        </div>
+
+        <h5 class="mt-3">📈 Advanced Insights</h5>
+        <div class="alert alert-info">
+            <strong>Pro Tip:</strong> Compare to the market benchmark (S&P 500 typically at ~0.01 daily return, ~0.012 std dev). Stocks significantly above the benchmark's risk-reward ratio may indicate:<br>
+            • 🚀 Exceptional growth potential<br>
+            • ⚠️ Potential overvaluation or instability<br>
+            • 📉 Higher probability of large swings
+        </div>
+
+        <div class="mt-3 p-3 bg-dark rounded">
+            <h6>💡 Remember:</h6>
+            <p class="mb-1">• Past performance ≠ future results</p>
+            <p class="mb-1">• Higher risk means bigger potential swings</p>
+            <p>• Diversification can help balance your portfolio</p>
+        </div>
+    </div>
+</div>
 
 
+<div id="correlationHeatmap" class="pt-5" style="width: 100%; height: 700px; min-height: 600px;"></div>
+
+<!-- Correlation Heatmap Section -->
+<div class="container-fluid mt-4 px-4">
+    <div class="bg-secondary p-4 rounded shadow-sm">
+        <h4 class="mb-3">🔗 Understanding Stock Correlation Heatmaps</h4>
+        <p>This heatmap visualizes the correlation between different stocks. Each cell represents the strength and direction of the relationship between a pair of stocks, based on their historical price movements.</p>
+
+        <h5 class="mt-3">📊 Interpreting Correlation Values</h5>
+        <ul class="mb-3">
+            <li><strong>+1.00</strong>: Perfect positive correlation (move together)</li>
+            <li><strong>0.00</strong>: No correlation (movement is unrelated)</li>
+            <li><strong>-1.00</strong>: Perfect negative correlation (move in opposite directions)</li>
+        </ul>
+
+        <h5 class="mt-3">📌 Quick Analysis Guide</h5>
+        <div class="alert alert-dark">
+            <strong>How to analyze:</strong><br>
+            ✔ <strong>Darker red</strong> → Strong negative correlation<br>
+            ✔ <strong>Darker blue</strong> → Strong positive correlation<br>
+            ✔ <strong>Light colors</strong> → Weak or no correlation<br>
+            ✔ <strong>Diagonal cells</strong> → Self-correlation (always 1.00)<br>
+            👆 <strong>Interactive:</strong> Hover or click on a cell to view the exact value
+        </div>
+
+        <h5 class="mt-3">📈 Strategic Insights</h5>
+        <div class="alert alert-info">
+            <strong>Pro Tip:</strong> Use correlation analysis to:<br>
+            • 🔀 Identify diversification opportunities<br>
+            • 📊 Avoid overexposure to similar market factors<br>
+            • 🔎 Spot tightly coupled stocks for pair trading strategies
+        </div>
+
+        <div class="mt-3 p-3 bg-dark rounded">
+            <h6>💡 Remember:</h6>
+            <p class="mb-1">• Correlation is not causation</p>
+            <p>• Relationships can shift with changing market conditions</p>
+        </div>
+    </div>
+</div>
+
+<div id="rsiChart" class="pt-5" style="width: 100%; height: 700px; min-height: 600px;"></div>
+
+<!-- RSI Analysis Section -->
+<div class="container-fluid mt-4 px-4">
+    <div class="bg-secondary p-4 rounded shadow-sm">
+        <h4 class="mb-3">📶 Understanding Relative Strength Index (RSI)</h4>
+        <p>This chart compares the RSI values across multiple stocks, showing momentum and potential overbought/oversold conditions. RSI measures the speed and change of price movements on a scale of 0 to 100. The 14 day period setting (default for RSI) represents <strong>2 market weeks</strong> of trading data. It strikes a balance between sensitivity and reliability.</p>
+
+        <h5 class="mt-3">📊 Key RSI Levels</h5>
+        <ul class="mb-3">
+            <li><strong>70+</strong>: Overbought territory (potential sell signal)</li>
+            <li><strong>30-</strong>: Oversold territory (potential buy signal)</li>
+            <li><strong>50</strong>: Centerline (bullish above, bearish below)</li>
+        </ul>
+
+        <h5 class="mt-3">📌 RSI Interpretation Guide</h5>
+        <div class="alert alert-dark">
+            <strong>How to analyze:</strong><br>
+            ✔ <strong>Red zone (70+)</strong> → Overextended rally, possible reversal<br>
+            ✔ <strong>Green zone (30-)</strong> → Oversold conditions, potential bounce<br>
+            ✔ <strong>Crossing 50</strong> → Momentum shift (bullish/bearish)<br>
+            ✔ <strong>Divergences</strong> → When price and RSI move opposite directions<br>
+            👆 <strong>Interactive:</strong> Hover to see exact values and compare trends
+        </div>
+
+        <h5 class="mt-3">📈 Advanced RSI Strategies</h5>
+        <div class="alert alert-info">
+            <strong>Pro Tip:</strong> Use RSI analysis to:<br>
+            • 🔄 Identify trend reversals early<br>
+            • ⚖️ Spot overbought/oversold conditions in context<br>
+            • 🔎 Find bullish/bearish divergences (price vs RSI)<br>
+            • 📉 Combine with support/resistance levels for confirmation<br>
+            • 🕰️ Use different timeframes (daily/weekly) for perspective (upcoming feature)
+        </div>
+
+        <h5 class="mt-3">⚠️ RSI Limitations</h5>
+        <div class="alert alert-warning">
+            <strong>Important Notes:</strong><br>
+            • RSI works best in ranging markets (less effective in strong trends)<br>
+            • Overbought doesn't always mean "sell" (in strong uptrends)<br>
+            • Oversold doesn't always mean "buy" (in strong downtrends)<br>
+        </div>
+
+        <div class="mt-3 p-3 bg-dark rounded">
+            <h6>💡 Expert Insight:</h6>
+            <p class="mb-1">• Look for RSI failure swings at extremes (70+/30-)</p>
+            <p>• Combine with volume analysis for stronger signals</p>
+            <p>• Watch for centerline (50) crosses as confirmation</p>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="bollingerChart" class="pt-5" style="width: 100%; height: 700px; min-height: 600px;"></div>
+
+<!-- Bollinger Bands Analysis Section -->
+<div class="container-fluid mt-4 px-4">
+    <div class="bg-secondary p-4 rounded shadow-sm">
+        <h4 class="mb-3">📊 Understanding Bollinger Bands</h4>
+        <p>This chart displays Bollinger Bands, a volatility indicator that shows how prices are dispersed around an average value. The bands expand and contract based on market volatility, creating a dynamic trading range. The default setting (20 periods, 2 standard deviations) captures approximately <strong>95% of price action</strong> within the bands during normal market conditions.</p>
+
+        <h5 class="mt-3">📈 Key Bollinger Band Components</h5>
+        <ul class="mb-3">
+            <li><strong>Upper Band</strong>: 20-period moving average + (2 × standard deviation)</li>
+            <li><strong>Middle Band</strong>: 20-period simple moving average (price baseline)</li>
+            <li><strong>Lower Band</strong>: 20-period moving average - (2 × standard deviation)</li>
+            <li><strong>Band Width</strong>: Measures volatility (wider = more volatile)</li>
+        </ul>
+
+        <h5 class="mt-3">📌 Bollinger Bands Interpretation Guide</h5>
+        <div class="alert alert-dark">
+            <strong>How to analyze:</strong><br>
+            ✔ <strong>Price touches upper band</strong> → Potential overbought condition<br>
+            ✔ <strong>Price touches lower band</strong> → Potential oversold condition<br>
+            ✔ <strong>Bands squeeze</strong> → Low volatility, often precedes big moves<br>
+            ✔ <strong>Bands expand</strong> → High volatility, trend continuation likely<br>
+            ✔ <strong>Price outside bands</strong> → Extreme move, possible reversal<br>
+            👆 <strong>Interactive:</strong> Hover to see exact values and band width changes
+        </div>
+
+        <h5 class="mt-3">📉 Advanced Bollinger Band Strategies</h5>
+        <div class="alert alert-info">
+            <strong>Pro Tip:</strong> Use Bollinger Bands to:<br>
+            • 🔄 Identify potential reversal points at band extremes<br>
+            • 🎯 Spot continuation patterns during band expansions<br>
+            • 🔍 Recognize volatility contractions before breakouts<br>
+            • 📊 Combine with %b indicator for precise positioning<br>
+            • 🕰️ Use with other indicators (like RSI) for confirmation<br>
+            • 📉 Watch for M-Tops and W-Bottoms pattern formations
+        </div>
+
+        <h5 class="mt-3">⚠️ Bollinger Bands Limitations</h5>
+        <div class="alert alert-warning">
+            <strong>Important Notes:</strong><br>
+            • Works best in ranging markets (can give false signals in trends)<br>
+            • Touching a band doesn't guarantee reversal (strong trends may ride bands)<br>
+            • Requires confirmation from other indicators for best results<br>
+            • Band width alone doesn't indicate direction of next move<br>
+        </div>
+
+        <div class="mt-3 p-3 bg-dark rounded">
+            <h6>💡 Expert Insight:</h6>
+            <p class="mb-1">• The most powerful signals come after band squeezes</p>
+            <p>• Price tends to return to the middle band over time</p>
+            <p>• Watch for multiple touches of one band without reversal</p>
+            <p>• Combine with volume spikes for breakout confirmation</p>
+        </div>
+
+        <div class="mt-3 alert alert-success">
+            <h6>🔧 Customization Options:</h6>
+            <p class="mb-1">• Adjust period length (default 20) for sensitivity</p>
+            <p>• Modify standard deviations (default 2) for band width</p>
+            <p>• Try 1.5 deviations for more signals, 2.5 for fewer but stronger signals</p>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="newListingModal" tabindex="-1">
   <div class="modal-dialog">
