@@ -227,6 +227,7 @@
     {{ chart_cr|json_script:"chart-cr" }}
     {{ chart_rsi|json_script:"chart-rsi" }}
     {{ chart_bb|json_script:"chart-bb" }}
+    {{ chart_ohlc|json_script:"chart-ohlc" }}
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -239,6 +240,9 @@
             window.chart_corr = JSON.parse(document.getElementById('chart-cr').textContent);
             window.chart_rsi = JSON.parse(document.getElementById('chart-rsi').textContent);
             window.chart_bb = JSON.parse(document.getElementById('chart-bb').textContent);
+            window.chart_ohlc = JSON.parse(document.getElementById('chart-ohlc').textContent);
+
+            console.log("ohlc: ", window.chart_ohlc);
         });
 
     </script>
@@ -256,6 +260,7 @@
     <script src="{% static 'historical_metrics/mean_and_std.js' %}"></script>
     <script src="{% static 'historical_metrics/rsi.js' %}"></script>
     <script src="{% static 'historical_metrics/bolinger.js' %}"></script>
+    <script src="{% static 'historical_metrics/ohlc.js' %}"></script>
     <script src="{% static 'dash/lib/easing/easing.min.js' %}"></script>
     <script src="{% static 'dash/lib/waypoints/waypoints.min.js' %}"></script>
     <script src="{% static 'dash/lib/owlcarousel/owl.carousel.min.js' %}"></script>

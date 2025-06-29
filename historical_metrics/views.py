@@ -48,6 +48,7 @@ def stocks_view(request):
         # chat_dd = pl.compare_drawdowns(data, tickers_list)
         chart_rsi = pl.compare_rsi(data, tickers_list, 14)
         chart_bb = pl.compare_bollinger_bands(data, tickers_list)
+        chart_ohlc = pl.compare_ohlc_data(data, tickers_list)
 
         # Store in session
         request.session['chart_rp'] = chart_rp
@@ -56,6 +57,7 @@ def stocks_view(request):
         request.session["chart_cr"] = chart_cr
         request.session["chart_rsi"] = chart_rsi
         request.session["chart_bb"] = chart_bb
+        request.session["chart_ohlc"] = chart_ohlc
 
         return redirect("stock_results")
     
@@ -70,8 +72,9 @@ def stock_results_view(request):
     chart_cr = request.session.pop("chart_cr", None)
     chart_rsi = request.session.pop("chart_rsi", None)
     chart_bb = request.session.pop("chart_bb", None)
-    # if not chart_data:
-    #     return redirect("stocks")
+    chart_ohlc = request.session.pop("chart_ohlc", None)
+
+
     
     context = {
         "chart_rp": chart_rp,
@@ -80,6 +83,7 @@ def stock_results_view(request):
         "chart_cr": chart_cr,
         "chart_rsi": chart_rsi,
         "chart_bb": chart_bb,
+        "chart_ohlc": chart_ohlc,
     }
     return render(request, "historical_metrics/stock_results.html", context)
 

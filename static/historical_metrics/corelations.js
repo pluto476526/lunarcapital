@@ -3,7 +3,9 @@
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const chart = echarts.init(document.getElementById('correlationHeatmap'), null, {
+  const container = document.getElementById('correlationHeatmap');
+
+  const chart = echarts.init(container, null, {
     renderer: 'canvas',
     useDirtyRect: false
   });
@@ -15,10 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
     chart.setOption(options);
   }
 
+  // Initial chart draw
   updateChart();
 
+  // Responsive: redraw on resize
   window.addEventListener('resize', () => chart.resize());
 
+  // Optional: Observe container size for dynamic redrawing
+  new ResizeObserver(() => chart.resize()).observe(container);
 });
 
 function buildHeatmapOptions(matrix, tickers) {
@@ -33,12 +39,10 @@ function buildHeatmapOptions(matrix, tickers) {
     backgroundColor: 'transparent',
     title: {
       text: 'Stock Correlation Heatmap',
+      subtext: 'Pearson correlation coefficients',
       left: 'center',
-      textStyle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#333'
-      }
+      textStyle: { fontSize: 18, fontWeight: 'bold', color: '#333' },
+      subtextStyle: { fontSize: 13, color: '#666' }
     },
     tooltip: {
       position: 'top',
@@ -54,9 +58,9 @@ function buildHeatmapOptions(matrix, tickers) {
       }
     },
     grid: {
-      top: 80,
-      left: 100,
-      right: 100,
+      top: 100,
+      left: 80,
+      right: 80,
       bottom: 100,
       containLabel: true
     },
@@ -110,7 +114,7 @@ function buildHeatmapOptions(matrix, tickers) {
       emphasis: {
         itemStyle: {
           shadowBlur: 10,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
+          shadowColor: 'rgba(0, 0, 0, 0.4)'
         }
       }
     }]

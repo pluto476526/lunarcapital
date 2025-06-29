@@ -18,9 +18,7 @@ def compare_relative_performance(data, tickers_list):
     - dict: Chart-ready data with available tickers only
     - None: If no valid data exists
     """
-    try:
-        logger.debug("DataFrame head:\n%s", data.head(5).to_string())
-        
+    try:        
         close_prices = pd.DataFrame()
         available_tickers = []
         missing_tickers = []
@@ -288,9 +286,7 @@ def compare_correlation(data, tickers_list):
     Returns:
     - Dictionary formatted for heatmap visualization
     """
-    try:
-        logger.debug("DataFrame head:\n%s", data.head(5).to_string())
-        
+    try:        
         close_prices = pd.DataFrame()
         available_tickers = []
         missing_tickers = []
@@ -353,6 +349,7 @@ def compare_correlation(data, tickers_list):
         return None
 
 
+
 def compare_rsi(data, tickers_list, window=14):
     """
     Calculate RSI for multiple tickers and format data for ECharts visualization.
@@ -395,12 +392,13 @@ def compare_rsi(data, tickers_list, window=14):
                     gain = delta.where(delta > 0, 0)
                     loss = -delta.where(delta < 0, 0)
                     
-                    avg_gain = gain.rolling(window=window).mean()
-                    avg_loss = loss.rolling(window=window).mean()
+                    avg_gain = gain.rolling(window=window).mean().dropna()
+                    avg_loss = loss.rolling(window=window).mean().dropna()
                     
                     rs = avg_gain / avg_loss
                     rsi = 100 - (100 / (1 + rs))
                     
+                    # Only store data from the first valid RSI point
                     rsi_data[ticker] = rsi.dropna()
                     available_tickers.append(ticker)
                 else:
@@ -424,12 +422,17 @@ def compare_rsi(data, tickers_list, window=14):
         series = []
         
         for ticker in available_tickers:
+            # Get the valid RSI values (non-null)
+            valid_rsi = rsi_data[ticker].dropna()
             series.append({
                 "name": ticker,
                 "type": "line",
-                "data": rsi_data[ticker].dropna().round(2).tolist(),
+                "data": valid_rsi.round(2).tolist(),
                 "symbol": "none",
-                "smooth": True
+                "smooth": True,
+                # Add start and end indices for this series
+                "_startIdx": dates.index(valid_rsi.index[0].strftime('%Y-%m-%d')),
+                "_endIdx": dates.index(valid_rsi.index[-1].strftime('%Y-%m-%d'))
             })
         
         return {
@@ -444,10 +447,10 @@ def compare_rsi(data, tickers_list, window=14):
                 }
             }
         }
-
     except Exception as e:
         logger.error(f"Error in compare_rsi: {str(e)}", exc_info=True)
         return None
+
 
 
 def compare_bollinger_bands(data, tickers_list, window=20, num_std=2):
@@ -477,6 +480,8 @@ def compare_bollinger_bands(data, tickers_list, window=20, num_std=2):
             }
         }
 
+        # First collect all dates from all tickers
+        all_dates = pd.DatetimeIndex([])
         for ticker in tickers_list:
             try:
                 # Extract close prices
@@ -495,34 +500,82 @@ def compare_bollinger_bands(data, tickers_list, window=20, num_std=2):
                     result['metadata']['missing_tickers'].append(ticker)
                     continue
                 
-                # Calculate bands
-                rolling_mean = close_series.rolling(window).mean().dropna()
-                rolling_std = close_series.rolling(window).std().dropna()
+                # Get all valid dates for this ticker
+                rolling_mean = close_series.rolling(window).mean()
+                first_valid_idx = rolling_mean.first_valid_index()
+                if first_valid_idx is None:
+                    result['metadata']['missing_tickers'].append(ticker)
+                    continue
                 
-                # Store results
-                result['series'][ticker] = {
-                    'price': close_series.round(2).tolist(),
-                    'upper': (rolling_mean + num_std * rolling_std).round(2).tolist(),
-                    'middle': rolling_mean.round(2).tolist(),
-                    'lower': (rolling_mean - num_std * rolling_std).round(2).tolist()
-                }
+                ticker_dates = rolling_mean.loc[first_valid_idx:].index
+                all_dates = all_dates.union(ticker_dates)
                 
-                # Set dates if not already set
-                if not result['dates']:
-                    result['dates'] = close_series.index.strftime('%Y-%m-%d').tolist()
-                    result['metadata'].update({
-                        'start_date': str(close_series.index.min()),
-                        'end_date': str(close_series.index.max())
-                    })
-                    
             except Exception as e:
                 logger.warning(f"Error processing {ticker}: {str(e)}")
                 result['metadata']['missing_tickers'].append(ticker)
                 continue
 
-        if not result['series']:
+        if len(all_dates) == 0:
             logger.error("No valid tickers with sufficient data")
             return None
+
+        # Set the complete date range
+        result['dates'] = [d.strftime('%Y-%m-%d') for d in all_dates]
+        date_index = {date: idx for idx, date in enumerate(result['dates'])}
+
+        # Now process each ticker against the complete date range
+        for ticker in tickers_list:
+            if ticker in result['metadata']['missing_tickers']:
+                continue
+                
+            try:
+                # Extract close prices again
+                if isinstance(data.columns, pd.MultiIndex):
+                    close_series = data.get((ticker, 'Close'))
+                else:
+                    close_series = data.get(f'{ticker}_Close')
+                
+                close_series = pd.to_numeric(close_series, errors='coerce').dropna()
+                
+                # Calculate bands
+                rolling_mean = close_series.rolling(window).mean()
+                rolling_std = close_series.rolling(window).std()
+                
+                first_valid_idx = rolling_mean.first_valid_index()
+                valid_dates = rolling_mean.loc[first_valid_idx:].index
+                start_idx = date_index[valid_dates[0].strftime('%Y-%m-%d')]
+                
+                # Create full-length arrays with None for missing periods
+                full_length = len(result['dates'])
+                price_data = [None] * full_length
+                upper_data = [None] * full_length
+                middle_data = [None] * full_length
+                lower_data = [None] * full_length
+                
+                for i, date in enumerate(valid_dates):
+                    idx = date_index[date.strftime('%Y-%m-%d')]
+                    price_data[idx] = round(close_series[date], 2)
+                    upper_data[idx] = round(rolling_mean[date] + num_std * rolling_std[date], 2)
+                    middle_data[idx] = round(rolling_mean[date], 2)
+                    lower_data[idx] = round(rolling_mean[date] - num_std * rolling_std[date], 2)
+                
+                result['series'][ticker] = {
+                    'price': price_data,
+                    'upper': upper_data,
+                    'middle': middle_data,
+                    'lower': lower_data,
+                    '_startIdx': start_idx
+                }
+                
+            except Exception as e:
+                logger.warning(f"Error processing {ticker}: {str(e)}")
+                result['metadata']['missing_tickers'].append(ticker)
+                continue
+
+        result['metadata'].update({
+            'start_date': str(all_dates[0]),
+            'end_date': str(all_dates[-1])
+        })
 
         return result
 
@@ -531,3 +584,205 @@ def compare_bollinger_bands(data, tickers_list, window=20, num_std=2):
         return None
 
 
+
+
+# def compare_ohlc_data(data, ticker):
+#     """
+#     Prepare OHLC (Open-High-Low-Close) data for ECharts candlestick chart
+    
+#     Parameters:
+#     - data: DataFrame with stock prices (MultiIndex or single level columns)
+#     - ticker: Single ticker symbol to extract data for
+    
+#     Returns:
+#     - Dictionary formatted for ECharts candlestick visualization
+#     """
+#     try:
+#         ohlc_data = []
+#         dates = []
+#         missing_fields = []
+        
+#         # Check data structure and extract OHLC data
+#         if isinstance(data.columns, pd.MultiIndex):
+#             # MultiIndex columns (yfinance format)
+#             fields = {
+#                 'open': (ticker, 'Open'),
+#                 'high': (ticker, 'High'),
+#                 'low': (ticker, 'Low'),
+#                 'close': (ticker, 'Close'),
+#                 'volume': (ticker, 'Volume')
+#             }
+#         else:
+#             # Single-level columns
+#             fields = {
+#                 'open': f'{ticker}_Open',
+#                 'high': f'{ticker}_High',
+#                 'low': f'{ticker}_Low',
+#                 'close': f'{ticker}_Close',
+#                 'volume': f'{ticker}_Volume'
+#             }
+        
+#         # Verify all required fields exist
+#         for field, col in fields.items():
+#             if col not in data.columns:
+#                 missing_fields.append(field)
+        
+#         if missing_fields:
+#             logger.warning(f"Missing fields for {ticker}: {', '.join(missing_fields)}")
+#             return None
+        
+#         # Extract and format the data
+#         for date, row in data.iterrows():
+#             try:
+#                 # ECharts candlestick expects: [open, close, low, high]
+#                 ohlc_point = [
+#                     float(row[fields['open']]),
+#                     float(row[fields['close']]),
+#                     float(row[fields['low']]),
+#                     float(row[fields['high']])
+#                 ]
+#                 ohlc_data.append(ohlc_point)
+#                 dates.append(str(date.date()))  # Format date as string
+#             except (ValueError, TypeError) as e:
+#                 logger.warning(f"Skipping invalid data point for {ticker} on {date}: {e}")
+#                 continue
+        
+#         if not ohlc_data:
+#             logger.error(f"No valid OHLC data found for {ticker}")
+#             return None
+        
+#         # Prepare volume data if available
+#         volume_data = []
+#         if fields['volume'] in data.columns:
+#             volume_data = [
+#                 [i, float(row[fields['volume']])] 
+#                 for i, (_, row) in enumerate(data.iterrows())
+#                 if not pd.isna(row[fields['volume']])
+#             ]
+        
+#         return {
+#             "candlestick": {
+#                 "data": ohlc_data,
+#                 "dates": dates,
+#                 "axisLabel": {
+#                     "formatter": '{value}'
+#                 }
+#             },
+#             "volume": {
+#                 "data": volume_data
+#             },
+#             "metadata": {
+#                 "ticker": ticker,
+#                 "date_range": {
+#                     "start": dates[0] if dates else None,
+#                     "end": dates[-1] if dates else None
+#                 },
+#                 "missing_fields": missing_fields
+#             }
+#         }
+    
+#     except Exception as e:
+#         logger.error(f"Error preparing OHLC data for {ticker}: {str(e)}", exc_info=True)
+#         return None
+
+
+
+
+def compare_ohlc_data(data, tickers_list):
+    """
+    Prepare OHLC data for multiple tickers for comparison in ECharts
+    
+    Parameters:
+    - data: DataFrame with MultiIndex columns (ticker, OHLCV)
+    - tickers_list: List of tickers to analyze
+    
+    Returns:
+    - Dictionary formatted for ECharts visualization
+    """
+    try:
+        result = {
+            "dates": [],
+            "series": [],
+            "metadata": {
+                "available_tickers": [],
+                "missing_tickers": [],
+                "missing_fields": {}
+            }
+        }
+
+        if not isinstance(data.columns, pd.MultiIndex):
+            raise ValueError("Data must have MultiIndex columns")
+
+        # Get common date index
+        date_index = None
+        for ticker in tickers_list:
+            try:
+                if (ticker, 'Close') in data.columns:
+                    close_series = data[(ticker, 'Close')].dropna()
+                    if date_index is None:
+                        date_index = close_series.index
+                    else:
+                        date_index = date_index.intersection(close_series.index)
+            except Exception as e:
+                logger.warning(f"Error processing {ticker}: {str(e)}")
+                result["metadata"]["missing_tickers"].append(ticker)
+                continue
+
+        if date_index is None or len(date_index) == 0:
+            logger.error("No common date index found")
+            return None
+
+        result["dates"] = [str(d.date()) for d in date_index]
+
+        for ticker in tickers_list:
+            try:
+                # Check required fields exist
+                required_fields = ['Open', 'High', 'Low', 'Close']
+                missing = [
+                    field for field in required_fields 
+                    if (ticker, field) not in data.columns
+                ]
+                
+                if missing:
+                    result["metadata"]["missing_fields"][ticker] = missing
+                    logger.warning(f"Missing fields for {ticker}: {missing}")
+                    continue
+
+                # Extract OHLC data
+                ohlc = data.loc[date_index, ticker]
+                ohlc = ohlc[['Open', 'High', 'Low', 'Close']].dropna()
+                
+                if len(ohlc) == 0:
+                    logger.warning(f"No valid data for {ticker}")
+                    continue
+
+                # Format for ECharts (array of [open, close, low, high])
+                ohlc_data = [
+                    [float(o), float(c), float(l), float(h)]
+                    for o, h, l, c in zip(
+                        ohlc['Open'], ohlc['High'], 
+                        ohlc['Low'], ohlc['Close']
+                    )
+                ]
+
+                result["series"].append({
+                    "name": ticker,
+                    "type": "candlestick",
+                    "data": ohlc_data
+                })
+                result["metadata"]["available_tickers"].append(ticker)
+
+            except Exception as e:
+                logger.error(f"Error processing {ticker}: {str(e)}")
+                result["metadata"]["missing_tickers"].append(ticker)
+                continue
+
+        if not result["series"]:
+            logger.error("No valid series data found")
+            return None
+
+        return result
+
+    except Exception as e:
+        logger.error(f"Error in compare_ohlc_data: {str(e)}", exc_info=True)
+        return None

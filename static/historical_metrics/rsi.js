@@ -20,7 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateChart();
   window.addEventListener('resize', () => chart.resize());
+
+  // responsive to parent container size changes
+  new ResizeObserver(() => chart.resize()).observe(container);
 });
+
 
 function buildRsiOptions(dates, series, windowPeriod) {
   return {
@@ -95,20 +99,16 @@ function buildRsiOptions(dates, series, windowPeriod) {
           type: 'dashed'
         }
       },
-      // Add RSI reference lines
       splitArea: {
         show: true,
         areaStyle: {
           color: [
-            // Overbought area (70-100)
             {
               color: 'rgba(255, 0, 0, 0.1)'
             },
-            // Neutral area (30-70)
             {
               color: 'rgba(0, 0, 0, 0)'
             },
-            // Oversold area (0-30)
             {
               color: 'rgba(0, 128, 0, 0.1)'
             }
@@ -116,42 +116,54 @@ function buildRsiOptions(dates, series, windowPeriod) {
         }
       }
     },
-    series: series.map(s => ({
-      ...s,
-      lineStyle: {
-        width: 2
-      },
-      areaStyle: {
-        opacity: 0.1
-      },
-      markLine: {
-        silent: true,
-        data: [
-          {
-            yAxis: 70,
-            lineStyle: {
-              color: '#f00',
-              type: 'dashed'
+    series: series.map(s => {
+      // Create an array with null values before the stock's data begins
+      const fullData = new Array(dates.length).fill(null);
+      // Fill in the actual data where it exists
+      s.data.forEach((value, idx) => {
+        fullData[s._startIdx + idx] = value;
+      });
+      
+      return {
+        ...s,
+        data: fullData,
+        lineStyle: {
+          width: 2
+        },
+        areaStyle: {
+          opacity: 0.1
+        },
+        markLine: {
+          silent: true,
+          data: [
+            {
+              yAxis: 70,
+              lineStyle: {
+                color: '#f00',
+                type: 'dashed'
+              },
+              label: {
+                formatter: 'Overbought (70)',
+                position: 'insideEndTop'
+              }
             },
-            label: {
-              formatter: 'Overbought (70)',
-              position: 'insideEndTop'
+            {
+              yAxis: 30,
+              lineStyle: {
+                color: '#080',
+                type: 'dashed'
+              },
+                label: {
+                formatter: 'Oversold (30)',
+                position: 'insideEndBottom'
+              }
             }
-          },
-          {
-            yAxis: 30,
-            lineStyle: {
-              color: '#080',
-              type: 'dashed'
-            },
-            label: {
-              formatter: 'Oversold (30)',
-              position: 'insideEndBottom'
-            }
-          }
-        ]
-      }
-    })),
+          ]
+        },
+        // Only connect points with data (don't connect through nulls)
+        connectNulls: false
+      };
+    }),
     dataZoom: [
       {
         type: 'inside',

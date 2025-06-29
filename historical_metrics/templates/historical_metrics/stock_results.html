@@ -163,32 +163,46 @@
 <div class="chart-container" style="height:40rem; width:100%">
   <canvas id="dailyReturnsChange"></canvas>
 </div>
+<!-- Daily Returns Trend Chart -->
 <div class="container-fluid mt-4 px-4">
     <div class="bg-secondary p-4 rounded shadow-sm">
-        <h4 class="mb-3">📉 Understanding Daily Returns Distribution</h4>
-        <p>
-            This graph shows the <strong>percentage change in stock prices each day</strong>. It helps you track how different stocks perform on a daily basis—whether they went up or down in value, and by how much. You can visualize <strong>how volatile a stock is</strong> and whether it tends to gain or lose value regularly.
-        </p>
-
-        <h5 class="mt-3">🔍 Key Features</h5>
+        <h4 class="mb-3">📈 Understanding Daily Return Trends</h4>
+        <p>This chart visualizes the day-to-day performance of selected stocks. It helps identify momentum shifts, seasonal patterns, and unusual volatility across time.</p>
+        
+        <h5 class="mt-3">📊 What to Look For</h5>
         <ul class="mb-3">
-            <li>📅 <strong>Daily View:</strong> Each group of bars represents one day, showing how each stock moved on that date.</li>
-            <li>📊 <strong>Colored Bars:</strong> Each stock has a different color, making it easy to compare them visually.</li>
-            <li>🔼 <strong>Upward Bar:</strong> The stock gained value that day.</li>
-            <li>🔽 <strong>Downward Bar:</strong> The stock lost value that day.</li>
-            <li>👆 <strong>Interactive:</strong> Hover over points for details</li>
+            <li><strong>Upward trends</strong> → Sustained gains or bullish periods</li>
+            <li><strong>Downward trends</strong> → Extended losses or bearish phases</li>
+            <li><strong>Spikes/drops</strong> → Volatile events like earnings, news, or economic shifts</li>
+            <li><strong>Flat regions</strong> → Periods of low volatility or consolidation</li>
         </ul>
 
         <h5 class="mt-3">📌 Quick Interpretation Guide</h5>
         <div class="alert alert-dark">
-            <strong>Look for:</strong><br>
-            ✔ <strong>Tall upward bars</strong> → Stock had a great day<br>
-            ✔ <strong>Tall downward bars or short bars in aggregated datasets</strong> → Stock had a poor day<br>
-            ✔ <strong>Compare colors</strong> → See which stock outperformed or underperformed on a given day<br>
-            ✔ <strong>Patterns over time</strong> → Spot trends, volatility, or consistent growth/decline
+            <strong>How to analyze:</strong><br>
+            ✔ <strong>Rising slope</strong> → Momentum is building (positive sentiment)<br>
+            ✔ <strong>Sharp dips</strong> → Watch for overreactions or market shocks<br>
+            ✔ <strong>Cross-comparison</strong> → See how different tickers respond to macro events<br>
+            ✔ <strong>Color-coded lines</strong> → Each line shows a separate stock’s trend<br>
+            👆 <strong>Interactive:</strong> Hover for exact return values by date
+        </div>
+
+        <h5 class="mt-3">🔎 Advanced Insights</h5>
+        <div class="alert alert-info">
+            <strong>Pro Tip:</strong> Align trend patterns with earnings reports, market news, or economic releases. Consider:<br>
+            • 🕐 Time-based anomalies (e.g., Monday dips, year-end rallies)<br>
+            • 📊 Momentum persistence or reversals<br>
+            • 📉 Divergences between similar stocks or sectors
+        </div>
+
+        <div class="mt-3 p-3 bg-dark rounded">
+            <h6>💡 Remember:</h6>
+            <p class="mb-1">• Trends can help with timing but don’t guarantee direction</p>
+            <p>• Look for consistency across multiple time frames</p>
         </div>
     </div>
 </div>
+
 
 
 <div class="chart-container" style="height:40rem; width:100%">
@@ -237,7 +251,7 @@
 </div>
 
 
-<div id="correlationHeatmap" class="pt-5" style="width: 100%; height: 700px; min-height: 600px;"></div>
+<div id="correlationHeatmap" class="pt-5 w-100" style="min-height: 600px;"></div>
 
 <!-- Correlation Heatmap Section -->
 <div class="container-fluid mt-4 px-4">
@@ -278,7 +292,7 @@
     </div>
 </div>
 
-<div id="rsiChart" class="pt-5" style="width: 100%; height: 700px; min-height: 600px;"></div>
+<div id="rsiChart" class="pt-5 w-100" style="height: 700px; min-height: 600px;"></div>
 
 <!-- RSI Analysis Section -->
 <div class="container-fluid mt-4 px-4">
@@ -332,7 +346,7 @@
 </div>
 
 
-<div id="bollingerChart" class="pt-5" style="width: 100%; height: 700px; min-height: 600px;"></div>
+<div id="bollingerChart" class="pt-5 w-100" style="height: 700px; min-height: 600px;"></div>
 
 <!-- Bollinger Bands Analysis Section -->
 <div class="container-fluid mt-4 px-4">
@@ -392,6 +406,86 @@
             <p class="mb-1">• Adjust period length (default 20) for sensitivity</p>
             <p>• Modify standard deviations (default 2) for band width</p>
             <p>• Try 1.5 deviations for more signals, 2.5 for fewer but stronger signals</p>
+        </div>
+    </div>
+</div>
+
+<div id="ohlcComparisonChart" class="pt-5 w-100" style="min-height: 600px;"></div>
+
+
+<!-- Candlestick Chart Analysis Section -->
+<div class="container-fluid mt-4 px-4">
+    <div class="bg-secondary p-4 rounded shadow-sm">
+        <h4 class="mb-3">🕯️ Understanding Candlestick Charts</h4>
+        <p>This candlestick chart displays the open, high, low, and close prices (OHLC) for each time period. Each "candle" visually represents price action, with the body showing the opening and closing prices, and wicks (shadows) showing the high and low extremes. The color indicates whether the price closed higher (typically green) or lower (typically red) than it opened.</p>
+
+        <h5 class="mt-3">📊 Key Candlestick Components</h5>
+        <ul class="mb-3">
+            <li><strong>Real Body</strong>: Thick part showing open-to-close range</li>
+            <li><strong>Upper Wick/Shadow</strong>: Line above body showing high price</li>
+            <li><strong>Lower Wick/Shadow</strong>: Line below body showing low price</li>
+            <li><strong>Bullish Candle</strong>: Close > Open (usually green/white)</li>
+            <li><strong>Bearish Candle</strong>: Close < Open (usually red/black)</li>
+            <li><strong>Doji</strong>: Open ≈ Close (small/no body)</li>
+        </ul>
+
+        <h5 class="mt-3">📌 Candlestick Interpretation Guide</h5>
+        <div class="alert alert-dark">
+            <strong>How to analyze:</strong><br>
+            ✔ <strong>Long bodies</strong> → Strong buying/selling pressure<br>
+            ✔ <strong>Small bodies</strong> → Indecision/consolidation<br>
+            ✔ <strong>Long upper wicks</strong> → Sellers rejected higher prices<br>
+            ✔ <strong>Long lower wicks</strong> → Buyers rejected lower prices<br>
+            ✔ <strong>Consecutive same-color candles</strong> → Momentum building<br>
+            👆 <strong>Interactive:</strong> Hover to see exact OHLC values and volume
+        </div>
+
+        <h5 class="mt-3">📈 Common Candlestick Patterns</h5>
+        <div class="alert alert-info">
+            <strong>Key Reversal Patterns:</strong><br>
+            • 🏗️ <strong>Hammer/Hanging Man</strong>: Small body with long lower wick<br>
+            • 🌟 <strong>Shooting Star/Inverted Hammer</strong>: Small body with long upper wick<br>
+            • 🕊️ <strong>Engulfing Patterns</strong>: Large candle completely "engulfs" previous<br>
+            • ✝️ <strong>Doji Stars</strong>: Indecision after strong move<br>
+            • 👑 <strong>Morning/Evening Stars</strong>: 3-candle reversal patterns<br>
+            • 🏰 <strong>Piercing Line/Dark Cloud Cover</strong>: Partial engulfing patterns
+        </div>
+
+        <h5 class="mt-3">⚠️ Candlestick Analysis Limitations</h5>
+        <div class="alert alert-warning">
+            <strong>Important Notes:</strong><br>
+            • Works best when confirmed with other indicators<br>
+            • Requires multiple candles for reliable patterns<br>
+            • Can give false signals during news events<br>
+            • Same pattern may have different meanings in uptrend vs. downtrend<br>
+            • Always consider the broader market context
+        </div>
+
+        <div class="mt-3 p-3 bg-dark rounded">
+            <h6>💡 Expert Insight:</h6>
+            <p class="mb-1">• The most reliable patterns occur at support/resistance levels</p>
+            <p>• Volume confirmation strengthens any candlestick signal</p>
+            <p>• Weekly candles often trump daily signals</p>
+            <p>• Multiple consecutive small candles often precede big moves</p>
+        </div>
+
+        <div class="mt-3 alert alert-success">
+            <h6>🔧 Customization Options:</h6>
+            <p class="mb-1">• Change timeframes (daily, weekly, hourly etc.)</p>
+            <p>• Adjust color schemes for better visibility</p>
+            <p>• Add moving averages to identify trends</p>
+            <p>• Combine with volume indicators for confirmation</p>
+        </div>
+
+        <h5 class="mt-3">📚 Candlestick Psychology</h5>
+        <div class="alert alert-primary">
+            <strong>What candles reveal about market sentiment:</strong><br>
+            • Long green candles show buyer dominance<br>
+            • Long red candles show seller control<br>
+            • Small bodies indicate balance between buyers/sellers<br>
+            • Long wicks show rejected prices (failed breakouts)<br>
+            • Gaps represent sudden shifts in valuation<br>
+            • Clustering at certain prices reveals key support/resistance
         </div>
     </div>
 </div>

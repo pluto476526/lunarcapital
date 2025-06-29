@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
           },
           ticks: {
             callback: function(value) {
-              return (value * 100).toFixed(0) + '%';
+              return ((value - 1) * 100).toFixed(1) + '%';
             }
             // return '$' + value.toLocaleString();
             // return ((value - 1) * 100).toFixed(1) + '%';  // Shows "-5.0%" to "+10.0%"
